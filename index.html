@@ -15,6 +15,16 @@
     <main>
       <div class="container">
         <h1 class="text-center text-4xl font-bold">Users' table</h1>
+        <select name="orderBy" id="sort-select">
+          <option value="name/1">Name (A-Z)</option>
+          <option value="name/-1">Name (Z-A)</option>
+          <option value="userName/1">User Name (A-Z)</option>
+          <option value="userName/-1">User Name (Z-A)</option>
+          <option value="city/1">City (A-Z)</option>
+          <option value="city/-1">City (Z-A)</option>
+          <option value="company/1">Company (A-Z)</option>
+          <option value="company/-1">Company (Z-A)</option>
+        </select>
         <div class="users-table mt-3" id="users-table">
             <table class="text-center" id="table">
                 <thead class="border text-xl capitalize">
