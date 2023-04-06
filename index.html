@@ -15,37 +15,40 @@
     <main>
       <div class="container">
         <h1 class="text-center text-4xl font-bold">Users' table</h1>
-        <form class="" id="searchForm">
-          <input class="search-bar" type="search" name="searchQuery">
-          <button type="submit">Search</button>
-        </form>
-        <select name="orderBy" id="sort-select">
-          <option value="name/1">Name (A-Z)</option>
-          <option value="name/-1">Name (Z-A)</option>
-          <option value="username/1">User Name (A-Z)</option>
-          <option value="username/-1">User Name (Z-A)</option>
-          <option value="city/1">City (A-Z)</option>
-          <option value="city/-1">City (Z-A)</option>
-          <option value="company/1">Company (A-Z)</option>
-          <option value="company/-1">Company (Z-A)</option>
-        </select>
+        <div class="flex space-x-96">
+          <form class="" id="searchForm">
+            <input class="search-bar" type="search" name="searchQuery" />
+            <button type="submit">Search</button>
+          </form>
+          <select name="orderBy" id="sort-select">
+            <option value="name/1">Name (A-Z)</option>
+            <option value="name/-1">Name (Z-A)</option>
+            <option value="username/1">User Name (A-Z)</option>
+            <option value="username/-1">User Name (Z-A)</option>
+            <option value="city/1">City (A-Z)</option>
+            <option value="city/-1">City (Z-A)</option>
+            <option value="company/1">Company (A-Z)</option>
+            <option value="company/-1">Company (Z-A)</option>
+          </select>
+        </div>
+
         <div class="users-table mt-3" id="users-table">
-            <table class="text-center" id="table">
-                <thead class="border text-xl capitalize">
-                  <th class="table-text">name</th>
-                  <th class="table-text">userName</th>
-                  <th class="table-text">email</th>
-                  <!-- <th class="table-text">address</th> -->
-                  <th class="table-text">street</th>
-                  <th class="table-text">suite</th>
-                  <th class="table-text">city</th>
-                  <th class="table-text">zipCode</th>
-                  <th class="table-text">phone</th>
-                  <th class="table-text">website</th>
-                  <th class="table-text">company</th>
-                </thead>
-                <tbody id="table-data">
-                  <!-- <tr class="font-medium">
+          <table class="text-center" id="table">
+            <thead class="border text-xl capitalize">
+              <th class="table-text">name</th>
+              <th class="table-text">userName</th>
+              <th class="table-text">email</th>
+              <!-- <th class="table-text">address</th> -->
+              <th class="table-text">street</th>
+              <th class="table-text">suite</th>
+              <th class="table-text">city</th>
+              <th class="table-text">zipCode</th>
+              <th class="table-text">phone</th>
+              <th class="table-text">website</th>
+              <th class="table-text">company</th>
+            </thead>
+            <tbody id="table-data">
+              <!-- <tr class="font-medium">
                       <td class="table-text">${user.name}</td>
                       <td class="table-text">${user.userName}</td>
                       <td class="table-text">${user.email}</td>
@@ -58,10 +61,9 @@
                       <td class="table-text">${user.website}</td>
                       <td class="table-text">${user.company}</td>
                   </tr> -->
-                </tbody>
-              </table>
+            </tbody>
+          </table>
         </div>
-        
       </div>
     </main>
   </body>

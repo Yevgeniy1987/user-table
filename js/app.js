@@ -2,12 +2,33 @@
 
 const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
+const searchForm = document.getElementById("searchForm");
 
 reRender(usersTableElem, Users, true);
 
-function createUsersTable(user) {
+searchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  
+  const searchQueryString = e.target.searchQuery.value
+    .trim()
+    .replaceAll(/\s{2,}/g, " ")
+    .toLowerCase();
+
+  const filteredUsers = Users.filter((user) => {
+    return `${user.name} ${user.address.city}`
+      .toLowerCase()
+      .includes(searchQueryString);
+  });
+  console.log(filteredUsers);
+  usersTableElem.innerHTML = "";
+
+  filteredUsers.forEach((user) => {
+    const userTableHTML = createUsersTable(user);
+    usersTableElem.insertAdjacentHTML("beforeend", userTableHTML);
+  });
+});
+
+function createUsersTable(user) {
   return `<tr class="font-medium">
     <td class="table-text">${user.name}</td>
     <td class="table-text">${user.username}</td>
@@ -22,8 +43,8 @@ function createUsersTable(user) {
 </tr>`;
 }
 
-sortSelect.addEventListener('change', (event) => {
-  const sortSelection = event.target.value.split('/');
+sortSelect.addEventListener("change", (event) => {
+  const sortSelection = event.target.value.split("/");
 
   const key = sortSelection[0];
   const order = sortSelection[1];
@@ -35,15 +56,7 @@ sortSelect.addEventListener('change', (event) => {
   reRender(usersTableElem, Users, true);
 });
 
-function reRender(to, array, clear) {
-  if (clear) {
-    to.innerHTML = '';
-  }
-  array.forEach((user) => {
-    const userTableHTML = createUsersTable(user);
-    to.insertAdjacentHTML('beforeend', userTableHTML);
-  });
-}
+
 
 function smartSort(array, order = 1, key) {
   return array.sort((a, b) => {
@@ -54,5 +67,15 @@ function smartSort(array, order = 1, key) {
       String(elem1).localeCompare(String(elem2), undefined, { numeric: true }) *
       order
     );
+  });
+}
+
+function reRender(to, array, clear) {
+  if (clear) {
+    to.innerHTML = "";
+  }
+  array.forEach((user) => {
+    const userTableHTML = createUsersTable(user);
+    to.insertAdjacentHTML("beforeend", userTableHTML);
   });
 }
