@@ -36,7 +36,7 @@ function createUsersTable(user) {
     <td class="table-text">${user.address.street}</td>
     <td class="table-text">${user.address.suite}</td> 
     <td class="table-text">${user.address.city}</td>
-    <td class="table-text">${user.address.zipCode}</td>
+    <td class="table-text">${user.address.zipcode}</td>
     <td class="table-text">${user.phone}</td>
     <td class="table-text">${user.website}</td>
     <td class="table-text">${user.company.name}</td>

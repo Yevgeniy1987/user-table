@@ -14,13 +14,13 @@
   <body>
     <main>
       <div class="container">
-        <h1 class="text-center text-4xl font-bold">Users' table</h1>
-        <div class="flex space-x-96">
+        <h1 class="text-center w-full px-6 py-6 text-8xl font-bold bg-local bg-contain" style="background-image: url(./img/4o8QNc.webp)" >Users' table</h1>
+        <div class="table-pos mt-5">
           <form class="" id="searchForm">
-            <input class="search-bar" type="search" name="searchQuery" />
-            <button type="submit">Search</button>
+            <input class="border-black border focus:border-lime-500 search-bar" type="search" name="searchQuery" />
+            <button class="rounded-3xl border border-black p-2 bg-stone-400 duration-300 hover:bg-orange-400 duration-300" type="submit">Search</button>
           </form>
-          <select name="orderBy" id="sort-select">
+          <select class="border border-black" name="orderBy" id="sort-select">
             <option value="name/1">Name (A-Z)</option>
             <option value="name/-1">Name (Z-A)</option>
             <option value="username/1">User Name (A-Z)</option>
@@ -32,9 +32,9 @@
           </select>
         </div>
 
-        <div class="users-table mt-3" id="users-table">
-          <table class="text-center" id="table">
-            <thead class="border text-xl capitalize">
+        <div class="users-table mt-5" id="users-table">
+          <table class="text-center w-full" id="table">
+            <thead class="border text-xl capitalize bg-slate-300">
               <th class="table-text">name</th>
               <th class="table-text">userName</th>
               <th class="table-text">email</th>

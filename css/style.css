@@ -240,13 +240,29 @@ table {
 }
 
 /*=========COMMON STYLES START============*/
+:root {
+  background: hsl(var(--hslHue), 100%, 85%);
+  border-color: hsl(var(--hslHue), 100%, 40%);
+  color:hsl(var(--hslHue), 100%, 25%);
+}
 
 .container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+  
 }
-
+h1 {
+  display:block;
+  margin: 0 auto;
+  color: crimson;
+  
+}
+.table-pos {
+  display: flex;
+  justify-content: space-between;
+  
+}
 .table-text {
   padding: 10px 10px;
   border: 1px solid black;
@@ -254,3 +270,7 @@ table {
 .search-bar {
   padding: 5px 15px;
 }
+.search-bar:focus {
+outline:none;
+}
+
