@@ -4,7 +4,7 @@ const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
-reRender(usersTableElem, Users, true);
+render(usersTableElem, Users, true);
 
 searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -15,7 +15,7 @@ searchForm.addEventListener("submit", (e) => {
     .toLowerCase();
 
   const filteredUsers = Users.filter((user) => {
-    return `${user.name} ${user.address.city}`
+    return `${user.name} ${user.username} ${user.address.city}`
       .toLowerCase()
       .includes(searchQueryString);
   });
@@ -44,24 +44,19 @@ function createUsersTable(user) {
 }
 
 sortSelect.addEventListener("change", (event) => {
-  const sortSelection = event.target.value.split("/");
-
-  const key = sortSelection[0];
-  const order = sortSelection[1];
+  const [key, order] = event.target.value.split("/");
 
   console.log(key, order);
 
   smartSort(Users, order, key);
 
-  reRender(usersTableElem, Users, true);
+  render(usersTableElem, Users, true);
 });
-
-
 
 function smartSort(array, order = 1, key) {
   return array.sort((a, b) => {
-    const elem1 = key ? a[key] : a;
-    const elem2 = key ? b[key] : b;
+    const elem1 = key ? _.get(a, key) : a;
+    const elem2 = key ? _.get(b, key) : b;
 
     return (
       String(elem1).localeCompare(String(elem2), undefined, { numeric: true }) *
@@ -70,7 +65,7 @@ function smartSort(array, order = 1, key) {
   });
 }
 
-function reRender(to, array, clear) {
+function render(to, array, clear) {
   if (clear) {
     to.innerHTML = "";
   }

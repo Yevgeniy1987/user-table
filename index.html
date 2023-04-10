@@ -7,28 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
     <script src="./js/data.js"></script>
+    <script src="./js/lodash.js"></script>
     <script defer src="./js/app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <title>User table</title>
   </head>
   <body>
     <main>
       <div class="container">
-        <h1 class="text-center w-full px-6 py-6 text-8xl font-bold bg-local bg-contain" style="background-image: url(./img/4o8QNc.webp)" >Users' table</h1>
+        <h1
+          class="text-center w-full px-6 py-6 text-8xl font-bold bg-local bg-contain"
+          style="background-image: url(./img/4o8QNc.webp)"
+        >
+          Users' table
+        </h1>
         <div class="table-pos mt-5">
           <form class="" id="searchForm">
-            <input class="border-black border focus:border-lime-500 search-bar" type="search" name="searchQuery" />
-            <button class="rounded-3xl border border-black p-2 bg-stone-400 duration-300 hover:bg-orange-400 duration-300" type="submit">Search</button>
+            <input
+              class="border-black border focus:border-lime-500 search-bar"
+              type="search"
+              name="searchQuery"
+            />
+            <button
+              class="rounded-3xl border border-black p-2 bg-stone-400 duration-300 hover:bg-orange-400 duration-300"
+              type="submit"
+            >
+              Search
+            </button>
           </form>
           <select class="border border-black" name="orderBy" id="sort-select">
             <option value="name/1">Name (A-Z)</option>
             <option value="name/-1">Name (Z-A)</option>
             <option value="username/1">User Name (A-Z)</option>
             <option value="username/-1">User Name (Z-A)</option>
-            <option value="city/1">City (A-Z)</option>
-            <option value="city/-1">City (Z-A)</option>
-            <option value="company/1">Company (A-Z)</option>
-            <option value="company/-1">Company (Z-A)</option>
+            <option value="address.city/1">City (A-Z)</option>
+            <option value="address.city/-1">City (Z-A)</option>
+            <option value="company.name/1">Company (A-Z)</option>
+            <option value="company.name/-1">Company (Z-A)</option>
           </select>
         </div>
 
