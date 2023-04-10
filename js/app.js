@@ -29,17 +29,21 @@ searchForm.addEventListener("submit", (e) => {
 });
 
 function createUsersTable(user) {
+  const { name, username, email, address, phone, website, company } = user;
+  const { street, suite, city, zipcode } = address;
+  const { name: companyName } = company;
+
   return `<tr class="font-medium">
-    <td class="table-text">${user.name}</td>
-    <td class="table-text">${user.username}</td>
-    <td class="table-text">${user.email}</td>
-    <td class="table-text">${user.address.street}</td>
-    <td class="table-text">${user.address.suite}</td> 
-    <td class="table-text">${user.address.city}</td>
-    <td class="table-text">${user.address.zipcode}</td>
-    <td class="table-text">${user.phone}</td>
-    <td class="table-text">${user.website}</td>
-    <td class="table-text">${user.company.name}</td>
+    <td class="table-text">${name}</td>
+    <td class="table-text">${username}</td>
+    <td class="table-text">${email}</td>
+    <td class="table-text">${street}</td>
+    <td class="table-text">${suite}</td> 
+    <td class="table-text">${city}</td>
+    <td class="table-text">${zipcode}</td>
+    <td class="table-text">${phone}</td>
+    <td class="table-text">${website}</td>
+    <td class="table-text">${companyName}</td>
 </tr>`;
 }
 
