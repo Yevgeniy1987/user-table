@@ -1,10 +1,24 @@
 "use strict";
+let users = Users;
 
 const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
-render(usersTableElem, Users, true);
+renderUsers(usersTableElem, users, true);
+
+usersTableElem.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn")) {
+    const deleteBtn = e.target;
+
+    const deletingUserId = Number(deleteBtn.dataset.id);
+
+    Users = Users.filter((user) => user.id !== deletingUserId);
+    users = Users
+
+    renderUsers(usersTableElem, users, true);
+  }
+});
 
 searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -14,26 +28,26 @@ searchForm.addEventListener("submit", (e) => {
     .replaceAll(/\s{2,}/g, " ")
     .toLowerCase();
 
-  const filteredUsers = Users.filter((user) => {
+  users = Users.filter((user) => {
     return `${user.name} ${user.username} ${user.address.city}`
       .toLowerCase()
       .includes(searchQueryString);
   });
-  console.log(filteredUsers);
+ 
   usersTableElem.innerHTML = "";
 
-  filteredUsers.forEach((user) => {
-    const userTableHTML = createUsersTable(user);
+  users.forEach((user) => {
+    const userTableHTML = createUsersContent(user);
     usersTableElem.insertAdjacentHTML("beforeend", userTableHTML);
   });
 });
 
-function createUsersTable(user) {
-  const { name, username, email, address, phone, website, company } = user;
+function createUsersContent(user) {
+  const { id, name, username, email, address, phone, website, company } = user;
   const { street, suite, city, zipcode } = address;
   const { name: companyName } = company;
 
-  return `<tr class="font-medium">
+  return `<tr class="hover:bg-amber-200 font-medium">
     <td class="table-text">${name}</td>
     <td class="table-text">${username}</td>
     <td class="table-text">${email}</td>
@@ -44,17 +58,16 @@ function createUsersTable(user) {
     <td class="table-text">${phone}</td>
     <td class="table-text">${website}</td>
     <td class="table-text">${companyName}</td>
+    <td class="table-text"><button data-id="${id}" class = "btn border bg-gray-200 p-1">Delete</button></td>
 </tr>`;
 }
 
 sortSelect.addEventListener("change", (event) => {
   const [key, order] = event.target.value.split("/");
 
-  console.log(key, order);
+  smartSort(users, order, key);
 
-  smartSort(Users, order, key);
-
-  render(usersTableElem, Users, true);
+  renderUsers(usersTableElem, users, true);
 });
 
 function smartSort(array, order = 1, key) {
@@ -69,12 +82,12 @@ function smartSort(array, order = 1, key) {
   });
 }
 
-function render(to, array, clear) {
+function renderUsers(to, array, clear) {
   if (clear) {
     to.innerHTML = "";
   }
   array.forEach((user) => {
-    const userTableHTML = createUsersTable(user);
+    const userTableHTML = createUsersContent(user);
     to.insertAdjacentHTML("beforeend", userTableHTML);
   });
 }
