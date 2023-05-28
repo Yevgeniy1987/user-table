@@ -5,7 +5,14 @@ const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
-renderUsers(usersTableElem, users, true);
+// renderUsers(usersTableElem, users, true);
+fetch(`http://localhost:3333/users`)
+  .then((res) => res.json())
+  .then((data) => {
+    Users = data;
+    users = Users;
+    renderUsers(usersTableElem, users, true);
+  });
 
 usersTableElem.addEventListener("click", (e) => {
   if (e.target.classList.contains("btn")) {
@@ -14,7 +21,7 @@ usersTableElem.addEventListener("click", (e) => {
     const deletingUserId = Number(deleteBtn.dataset.id);
 
     Users = Users.filter((user) => user.id !== deletingUserId);
-    users = Users
+    users = Users;
 
     renderUsers(usersTableElem, users, true);
   }
@@ -28,18 +35,37 @@ searchForm.addEventListener("submit", (e) => {
     .replaceAll(/\s{2,}/g, " ")
     .toLowerCase();
 
-  users = Users.filter((user) => {
-    return `${user.name} ${user.username} ${user.address.city}`
-      .toLowerCase()
-      .includes(searchQueryString);
-  });
- 
-  usersTableElem.innerHTML = "";
+  fetch(`http://localhost:3333/users?q=${searchQueryString}`)
+    .then((res) => res.json())
+    .then((data) => {
+      Users = data;
+      users = Users;
+      renderUsers(usersTableElem, users, true);
+    });
+  // users = Users.filter((user) => {
+  //   return `${user.name} ${user.username} ${user.address.city}`
+  //     .toLowerCase()
+  //     .includes(searchQueryString);
+  // });
 
-  users.forEach((user) => {
-    const userTableHTML = createUsersContent(user);
-    usersTableElem.insertAdjacentHTML("beforeend", userTableHTML);
-  });
+  // renderUsers(usersTableElem, users, true);
+});
+
+sortSelect.addEventListener("change", (event) => {
+  const [key, order] = event.target.value.split("/");
+
+  fetch(`http://localhost:3333/users?_sort=${[key, order]}`)
+    .then((res) => res.json())
+    .then((data) => {
+      smartSort(data, order, key);
+      Users = data;
+      users = Users;
+
+      renderUsers(usersTableElem, users, true);
+    });
+  // smartSort(users, order, key);
+
+  // renderUsers(usersTableElem, users, true);
 });
 
 function createUsersContent(user) {
@@ -62,15 +88,7 @@ function createUsersContent(user) {
 </tr>`;
 }
 
-sortSelect.addEventListener("change", (event) => {
-  const [key, order] = event.target.value.split("/");
-
-  smartSort(users, order, key);
-
-  renderUsers(usersTableElem, users, true);
-});
-
-function smartSort(array, order = 1, key) {
+function smartSort(array, order, key) {
   return array.sort((a, b) => {
     const elem1 = key ? _.get(a, key) : a;
     const elem2 = key ? _.get(b, key) : b;
