@@ -5,7 +5,12 @@ const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
-// renderUsers(usersTableElem, users, true);
+// renderUsers(usersTableElem, users, true);.
+
+const loadingSpinner = `<tr class="font-medium"><td class="table-text"colspan="11">Loading...</td><tr>`;
+
+usersTableElem.innerHTML = loadingSpinner;
+
 fetch(`http://localhost:3333/users`)
   .then((res) => res.json())
   .then((data) => {
@@ -22,7 +27,6 @@ usersTableElem.addEventListener("click", (e) => {
 
     Users = Users.filter((user) => user.id !== deletingUserId);
     users = Users;
-
     renderUsers(usersTableElem, users, true);
   }
 });
@@ -35,11 +39,14 @@ searchForm.addEventListener("submit", (e) => {
     .replaceAll(/\s{2,}/g, " ")
     .toLowerCase();
 
+  usersTableElem.innerHTML = loadingSpinner;
+
   fetch(`http://localhost:3333/users?q=${searchQueryString}`)
     .then((res) => res.json())
     .then((data) => {
       Users = data;
       users = Users;
+
       renderUsers(usersTableElem, users, true);
     });
   // users = Users.filter((user) => {
@@ -54,10 +61,12 @@ searchForm.addEventListener("submit", (e) => {
 sortSelect.addEventListener("change", (event) => {
   const [key, order] = event.target.value.split("/");
 
+  usersTableElem.innerHTML = loadingSpinner;
+
   fetch(`http://localhost:3333/users?_sort=${[key, order]}`)
     .then((res) => res.json())
     .then((data) => {
-      smartSort(data, order, key);
+      
       Users = data;
       users = Users;
 

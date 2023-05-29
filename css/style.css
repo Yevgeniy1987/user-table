@@ -243,25 +243,31 @@ table {
 :root {
   background: hsl(var(--hslHue), 100%, 85%);
   border-color: hsl(var(--hslHue), 100%, 40%);
-  color:hsl(var(--hslHue), 100%, 25%);
+  color: hsl(var(--hslHue), 100%, 25%);
 }
 
 .container {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  
 }
 h1 {
-  display:block;
-  margin: 0 auto;
+  display: block;
   color: crimson;
-  
+  background: url(../img/4o8QNc.webp), black;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px dotted black;
+  border-radius: 50px;
+  transform: rotate(360deg);
+  transition: 0.3s;
 }
 .table-pos {
   display: flex;
   justify-content: space-between;
-  
 }
 .table-text {
   padding: 10px 10px;
@@ -271,6 +277,5 @@ h1 {
   padding: 5px 15px;
 }
 .search-bar:focus {
-outline:none;
+  outline: none;
 }
-

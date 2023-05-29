@@ -16,10 +16,7 @@
   <body>
     <main>
       <div class="container">
-        <h1
-          class="text-center w-full px-6 py-6 text-8xl font-bold bg-local bg-contain"
-          style="background-image: url(./img/4o8QNc.webp)"
-        >
+        <h1 class="text-center w-full px-6 py-6 text-8xl font-bold bg-contain">
           Users' table
         </h1>
         <div class="table-pos mt-5">
@@ -30,21 +27,21 @@
               name="searchQuery"
             />
             <button
-              class="rounded-3xl border border-black p-2 bg-stone-400 duration-300 hover:bg-orange-400 duration-300"
+              class="rounded-3xl border border-black p-2 bg-stone-400 duration-300 hover:bg-orange-400"
               type="submit"
             >
               Search
             </button>
           </form>
           <select class="border border-black" name="orderBy" id="sort-select">
-            <option value="name/1">Name (A-Z)</option>
-            <option value="name/-1">Name (Z-A)</option>
-            <option value="username/1">User Name (A-Z)</option>
-            <option value="username/-1">User Name (Z-A)</option>
-            <option value="address.city/1">City (A-Z)</option>
-            <option value="address.city/-1">City (Z-A)</option>
-            <option value="company.name/1">Company (A-Z)</option>
-            <option value="company.name/-1">Company (Z-A)</option>
+            <option value="name/asc">Name (A-Z)</option>
+            <option value="name/desc">Name (Z-A)</option>
+            <option value="username/asc">User Name (A-Z)</option>
+            <option value="username/desc">User Name (Z-A)</option>
+            <option value="address.city/asc">City (A-Z)</option>
+            <option value="address.city/desc">City (Z-A)</option>
+            <option value="company.name/asc">Company (A-Z)</option>
+            <option value="company.name/desc">Company (Z-A)</option>
           </select>
         </div>
 
