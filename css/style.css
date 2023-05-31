@@ -256,15 +256,31 @@ h1 {
   color: crimson;
   background: url(../img/4o8QNc.webp), black;
 }
-
+.spinner-wrap{
+  display: flex;
+  align-items: center;
+}
+/* .colouredSpinner {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border: 10px solid;
+  border-color: linear-gradient(red, pink, orange, blue);
+  border-radius: 50px;
+  animation: spin 2s linear infinite;
+} */
 .spinner {
   width: 50px;
   height: 50px;
   border: 10px dotted black;
   border-radius: 50px;
-  transform: rotate(360deg);
-  transition: 0.3s;
   margin: 0 auto;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .table-pos {
   display: flex;

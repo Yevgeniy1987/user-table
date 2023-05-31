@@ -5,7 +5,7 @@ const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
-const loadingSpinner = `<tr class="font-medium"><td class="table-text" colspan="11"><div class="spinner"></div></td><tr>`;
+const loadingSpinner = `<tr><td colspan="11"><div class="spinner-wrap h-[80px]"><div class="spinner"></div></div></td><tr>`;
 
 usersTableElem.innerHTML = loadingSpinner;
 
@@ -21,6 +21,7 @@ usersTableElem.addEventListener("click", (e) => {
     const deleteBtn = e.target;
 
     const deletingUserId = Number(deleteBtn.dataset.id);
+    
     fetch(`http://localhost:3333/users/`, { method: "DELETE", })
       .then((res) => res.json())
       .then((data) => {
