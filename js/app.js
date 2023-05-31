@@ -1,21 +1,18 @@
 "use strict";
-let users = Users;
+let users = [];
 
 const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
-// renderUsers(usersTableElem, users, true);.
-
-const loadingSpinner = `<tr class="font-medium"><td class="table-text"colspan="11">Loading...</td><tr>`;
+const loadingSpinner = `<tr class="font-medium"><td class="table-text" colspan="11"><div class="spinner"></div></td><tr>`;
 
 usersTableElem.innerHTML = loadingSpinner;
 
-fetch(`http://localhost:3333/users`)
+fetch(`http://localhost:3333/users?_sort=name&_order=asc`)
   .then((res) => res.json())
   .then((data) => {
-    Users = data;
-    users = Users;
+    users = data;
     renderUsers(usersTableElem, users, true);
   });
 
@@ -24,9 +21,15 @@ usersTableElem.addEventListener("click", (e) => {
     const deleteBtn = e.target;
 
     const deletingUserId = Number(deleteBtn.dataset.id);
+    fetch(`http://localhost:3333/users/`, { method: "DELETE", })
+      .then((res) => res.json())
+      .then((data) => {
+        users = data;
+        renderUsers(usersTableElem, users, true);
+      });
 
-    Users = Users.filter((user) => user.id !== deletingUserId);
-    users = Users;
+    users = users.filter((user) => user.id !== deletingUserId);
+
     renderUsers(usersTableElem, users, true);
   }
 });
@@ -44,9 +47,7 @@ searchForm.addEventListener("submit", (e) => {
   fetch(`http://localhost:3333/users?q=${searchQueryString}`)
     .then((res) => res.json())
     .then((data) => {
-      Users = data;
-      users = Users;
-
+      users = data;
       renderUsers(usersTableElem, users, true);
     });
   // users = Users.filter((user) => {
@@ -63,13 +64,10 @@ sortSelect.addEventListener("change", (event) => {
 
   usersTableElem.innerHTML = loadingSpinner;
 
-  fetch(`http://localhost:3333/users?_sort=${[key, order]}`)
+  fetch(`http://localhost:3333/users?_sort=${key}&_order=${order}`)
     .then((res) => res.json())
     .then((data) => {
-      
-      Users = data;
-      users = Users;
-
+      users = data;
       renderUsers(usersTableElem, users, true);
     });
   // smartSort(users, order, key);

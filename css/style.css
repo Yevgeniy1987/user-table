@@ -264,6 +264,7 @@ h1 {
   border-radius: 50px;
   transform: rotate(360deg);
   transition: 0.3s;
+  margin: 0 auto;
 }
 .table-pos {
   display: flex;
