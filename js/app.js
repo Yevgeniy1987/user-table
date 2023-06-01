@@ -1,37 +1,41 @@
 "use strict";
 let users = [];
 
+const URL_BASE = `http://localhost:3333`;
+
 const usersTableElem = document.getElementById("table-data");
 const sortSelect = document.getElementById("sort-select");
 const searchForm = document.getElementById("searchForm");
 
 const loadingSpinner = `<tr><td colspan="11"><div class="spinner-wrap h-[80px]"><div class="spinner"></div></div></td><tr>`;
 
-usersTableElem.innerHTML = loadingSpinner;
+workWithData(`users?_sort=name&_order=asc`);
 
-fetch(`http://localhost:3333/users?_sort=name&_order=asc`)
-  .then((res) => res.json())
-  .then((data) => {
-    users = data;
-    renderUsers(usersTableElem, users, true);
-  });
+// fetch(`http://localhost:3333/users?_sort=name&_order=asc`)
+//   .then((res) => res.json())
+//   .then((data) => {
+//     users = data;
+//     renderUsers(usersTableElem, users, true);
+//   });
 
 usersTableElem.addEventListener("click", (e) => {
   if (e.target.classList.contains("btn")) {
+    const agree = confirm("Are you sure?!");
+    if (!agree) {
+      return;
+    }
     const deleteBtn = e.target;
 
     const deletingUserId = Number(deleteBtn.dataset.id);
-    
-    fetch(`http://localhost:3333/users/`, { method: "DELETE", })
-      .then((res) => res.json())
-      .then((data) => {
-        users = data;
-        renderUsers(usersTableElem, users, true);
-      });
 
-    users = users.filter((user) => user.id !== deletingUserId);
-
-    renderUsers(usersTableElem, users, true);
+    fetch(`${URL_BASE}/users/${deletingUserId}`, { method: "DELETE" }).then(
+      (res) => {
+        if (res.ok) {
+          users = users.filter((user) => user.id !== deletingUserId);
+          renderUsers(usersTableElem, users, true);
+        }
+      }
+    );
   }
 });
 
@@ -43,14 +47,14 @@ searchForm.addEventListener("submit", (e) => {
     .replaceAll(/\s{2,}/g, " ")
     .toLowerCase();
 
-  usersTableElem.innerHTML = loadingSpinner;
+  workWithData(`users?q=${searchQueryString}`);
 
-  fetch(`http://localhost:3333/users?q=${searchQueryString}`)
-    .then((res) => res.json())
-    .then((data) => {
-      users = data;
-      renderUsers(usersTableElem, users, true);
-    });
+  // fetch(`http://localhost:3333/users?q=${searchQueryString}`)
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     users = data;
+  //     renderUsers(usersTableElem, users, true);
+  //   });
   // users = Users.filter((user) => {
   //   return `${user.name} ${user.username} ${user.address.city}`
   //     .toLowerCase()
@@ -63,14 +67,14 @@ searchForm.addEventListener("submit", (e) => {
 sortSelect.addEventListener("change", (event) => {
   const [key, order] = event.target.value.split("/");
 
-  usersTableElem.innerHTML = loadingSpinner;
+  workWithData(`users?_sort=${key}&_order=${order}`);
 
-  fetch(`http://localhost:3333/users?_sort=${key}&_order=${order}`)
-    .then((res) => res.json())
-    .then((data) => {
-      users = data;
-      renderUsers(usersTableElem, users, true);
-    });
+  // fetch(`http://localhost:3333/users?_sort=${key}&_order=${order}`)
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     users = data;
+  //     renderUsers(usersTableElem, users, true);
+  //   });
   // smartSort(users, order, key);
 
   // renderUsers(usersTableElem, users, true);
@@ -96,17 +100,17 @@ function createUsersContent(user) {
 </tr>`;
 }
 
-function smartSort(array, order, key) {
-  return array.sort((a, b) => {
-    const elem1 = key ? _.get(a, key) : a;
-    const elem2 = key ? _.get(b, key) : b;
+// function smartSort(array, order, key) {
+//   return array.sort((a, b) => {
+//     const elem1 = key ? _.get(a, key) : a;
+//     const elem2 = key ? _.get(b, key) : b;
 
-    return (
-      String(elem1).localeCompare(String(elem2), undefined, { numeric: true }) *
-      order
-    );
-  });
-}
+//     return (
+//       String(elem1).localeCompare(String(elem2), undefined, { numeric: true }) *
+//       order
+//     );
+//   });
+// }
 
 function renderUsers(to, array, clear) {
   if (clear) {
@@ -116,4 +120,15 @@ function renderUsers(to, array, clear) {
     const userTableHTML = createUsersContent(user);
     to.insertAdjacentHTML("beforeend", userTableHTML);
   });
+}
+
+function workWithData(path) {
+  usersTableElem.innerHTML = loadingSpinner;
+
+  fetch(`${URL_BASE}/${path}`)
+    .then((res) => res.json())
+    .then((data) => {
+      users = data;
+      renderUsers(usersTableElem, users, true);
+    });
 }
